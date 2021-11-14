@@ -27,7 +27,7 @@ class Player:
         # print("len(deck_of_cards)", len(deck_of_cards), '\n')
 
         print(f"The card is `{played_card.curent}` with `{played_card.counter}` counters")
-        print(f"Player `{self.number}` cards are {self.hand} with `{self.counters}` counters")
+        print(f"Player {self.number} cards are {self.hand} with `{self.counters}` counters")
 
         if self.counters <= 0:
             print("You have 0 counters. Take the card")
@@ -111,7 +111,7 @@ def main():
     while cards_to_remove > 0:
         remove_card: int = random.choice(deck_of_cards)
         deck_of_cards.remove(remove_card)
-        print("removed card", remove_card)
+        # print("removed card", remove_card)
 
         cards_to_remove -= 1
 
