@@ -83,18 +83,18 @@ def game_end(list_of_players: list[Player]):
     for player_n in list_of_players:
 
         total_score: list[int] = []
-        for group in consecutive_groups(sorted(player_n.hand)):
+        hand_sorted = sorted(player_n.hand)
+        for group in consecutive_groups(hand_sorted):
 
             items: list[int] = list(group)
             # print("group", items)
             if items:
                 total_score.append(min(items))
 
-        print(total_score)
 
         potencial_winner_score: int = sum(total_score) - player_n.counters
 
-        print(f"Player {player_n.number} with a hand {potencial_winner_score} and counters {player_n.counters}")
+        print(f"Player {player_n.number} with a score {potencial_winner_score} and counters {player_n.counters}. Cards: {hand_sorted}")
 
         if winner_score > potencial_winner_score:
             winner_score = potencial_winner_score
