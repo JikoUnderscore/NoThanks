@@ -4,6 +4,7 @@ import random
 from itertools import groupby
 from operator import itemgetter
 from typing import Generator, Any
+from os import system, name
 
 
 @dataclass()
@@ -26,13 +27,14 @@ class Player:
             return
         # print("len(deck_of_cards)", len(deck_of_cards), '\n')
 
-        print(f"The card is `{played_card.curent}` with `{played_card.counter}` counters")
-        print(f"Player {self.number} cards are {self.hand} with `{self.counters}` counters")
+        print(f"The card is `{played_card.curent}` with `{played_card.counter}` counters\n")
+        print(f"Player {self.number} cards are {self.hand} with `{self.counters}` counters\n")
 
         if self.counters <= 0:
             print("You have 0 counters. Take the card")
             input("Press any to continue!")
             self.counters += played_card.counter
+            self.hand.append(played_card.curent)
 
             played_card.curent = deck_of_cards.pop()
             played_card.counter = 0
@@ -40,7 +42,7 @@ class Player:
 
             while True:
 
-                choice = input(f"[T] take the card, [C] or [P] to plase a token on the card \nPlayer {self.number} >")
+                choice = input(f"Press [T] take the card, Press [C] or [P] to plase a token on the card \nPlayer {self.number} >")
 
                 match choice.lower():
                     case "t":
@@ -49,6 +51,8 @@ class Player:
 
                         played_card.curent = deck_of_cards.pop()
                         played_card.counter = 0
+                        clear()
+
                         self.make_a_choice(played_card, deck_of_cards)
                         break
                     case "c" | "p":
@@ -57,7 +61,6 @@ class Player:
                         break
                     case _:
                         print("REENTER ANSWERE")
-
 
 
 def info(list_of_players: list[Player]):
@@ -101,6 +104,15 @@ def game_end(list_of_players: list[Player]):
     print(f"WINNER IS PLAYER {winner_number} with {winner_score}")
 
 
+def clear():
+    # for windows
+    if name == 'nt':
+        system('cls')
+    # for mac and linux(here, os.name is 'posix')
+    else:
+        system('clear')
+
+
 def main():
 # ---- SETUP
     deck_of_cards: list[int] = [n for n in range(3, 36)]
@@ -135,7 +147,7 @@ def main():
 
             info(list_of_players)
             player_n.make_a_choice(played_card, deck_of_cards)
-
+            clear()
 
     game_end(list_of_players)
 
